@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 
-import { Disclosure } from "@headlessui/react";
+import InfoModal from "@/app/components/info-modal";
 
 const roboto = Roboto({
   weight: "400",
@@ -28,20 +28,18 @@ export default function RootLayout({
     >
       <body className="h-full">
         <div className="min-h-full">
-          <Disclosure
-            as="nav"
-            className="border-b-4 border-gray-200 bg-white dark:border-white/5 dark:bg-neutral-900"
-          >
+          <nav className="border-b-4 border-gray-200 bg-white dark:border-white/5 dark:bg-neutral-900">
             <div className="mx-auto px-4">
-              <div className="flex h-16 justify-between">
+              <div className="flex h-16 justify-between items-center">
                 <div className="flex">
                   <div className="flex shrink-0 items-center">
                     <span>Safeguard Sandbox</span>
                   </div>
                 </div>
+                <InfoModal />
               </div>
             </div>
-          </Disclosure>
+          </nav>
 
           <main className="p-2">{children}</main>
         </div>
