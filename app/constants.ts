@@ -1,17 +1,25 @@
-export const modelOptions = [
+export type ModelOption = {
+  value: string;
+  title: string;
+  description: string;
+  current: boolean;
+  disabled?: boolean;
+};
+
+export const modelOptions: ModelOption[] = [
   {
     value: "openai.gpt-oss-safeguard-20b",
-    title: "GPT OSS Safeguard 20B",
-    description: "Safety reasoning models built-upon gpt-oss.",
+    title: "gpt-oss-safeguard-20b",
+    description:
+      "Lower-latency GPT OSS safeguard model for fast safety checks.",
     current: true,
   },
   {
-    value: "llama-guard-3-8B",
-    title: "Llama Guard 3.1 8B (Coming Soon)",
+    value: "openai.gpt-oss-safeguard-120b",
+    title: "gpt-oss-safeguard-120b",
     description:
-      "Llama Guard 3 is a Llama-3.1-8B pretrained model, fine-tuned for content safety classification.",
+      "Highest-capacity GPT OSS safeguard model for nuanced safety classification.",
     current: false,
-    disabled: true,
   },
 ];
 

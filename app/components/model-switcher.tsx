@@ -9,15 +9,11 @@ import {
 } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
 
+import type { ModelOption } from "@/app/constants";
+
 interface Props {
   defaultValue: string;
-  options: {
-    value: string;
-    title: string;
-    description: string;
-    current?: boolean;
-    disabled?: boolean;
-  }[];
+  options: ModelOption[];
 }
 
 export default function ModelSwitcher({ defaultValue, options }: Props) {

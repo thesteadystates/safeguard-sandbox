@@ -10,7 +10,9 @@ import {
 import type { EvalState } from "@/app/types";
 import { classifyContent } from "@/lib/bedrock";
 
-const modelValues = modelOptions.map((option) => option.value);
+const enabledModelValues = modelOptions
+  .filter((option) => !option.disabled)
+  .map((option) => option.value);
 
 const schema = z.object({
   content: z
@@ -20,7 +22,7 @@ const schema = z.object({
       MAX_CONTENT_LENGTH,
       `Content must be ${MAX_CONTENT_LENGTH} characters or less`,
     ),
-  model: z.enum(modelValues, "Invalid model selected"),
+  model: z.enum(enabledModelValues, "Invalid model selected"),
 });
 
 export async function createEval(

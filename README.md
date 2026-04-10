@@ -5,6 +5,11 @@
 - AWS service account with access to AWS Bedrock
 - AWS credentials with IAM permissions to invoke Bedrock models
 
+## Supported Models
+
+- `openai.gpt-oss-safeguard-20b` (default, lower latency)
+- `openai.gpt-oss-safeguard-120b` (higher-capacity reasoning)
+
 ## Environment Setup
 
 ### 1. Configure Environment Variables
