@@ -26,6 +26,7 @@ export default function ContentEvaluationForm({
       <div className="order-1 inset-x-px absolute top-0">
         <div className="flex items-center justify-between space-x-3 border-b border-gray-200 px-2 py-2 sm:px-3 dark:border-white/10">
           <ModelSwitcher
+            key={state?.model || modelOptions[0].value}
             defaultValue={state?.model || modelOptions[0].value}
             options={modelOptions}
           />

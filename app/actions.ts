@@ -36,6 +36,7 @@ export async function createEval(
 
   if (!validatedFields.success) {
     return {
+      model: formData.get("model") as string,
       errors: validatedFields.error.flatten().fieldErrors,
     };
   }
