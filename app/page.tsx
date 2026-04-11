@@ -3,9 +3,8 @@
 import { useActionState } from "react";
 
 import { createEval } from "@/app/actions";
-import ClassificationRationale from "@/app/components/classification-rationale";
+import ModelOutput from "@/app/components/model-output";
 import ContentEvaluationForm from "@/app/components/content-evaluation-form";
-import SafetyClassification from "@/app/components/safety-classification";
 
 const initialState = {
   errors: {},
@@ -26,16 +25,7 @@ export default function Home() {
         </div>
         <div className="mx-auto sm:w-1/2 p-2">
           <div className="h-full relative flex flex-col">
-            <SafetyClassification
-              violation={state.classification?.violation ?? null}
-              categories={state.classification?.categories ?? []}
-              confidenceScores={state.classification?.confidence_scores ?? {}}
-              loading={pending}
-            />
-            <ClassificationRationale
-              rationale={state.classification?.rationale ?? null}
-              loading={pending}
-            />
+            <ModelOutput output={state.modelOutput ?? null} loading={pending} />
           </div>
         </div>
       </div>

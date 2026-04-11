@@ -11,7 +11,7 @@ import { env } from "./env";
 interface BedrockResponse {
   choices?: Array<{
     message?: {
-      content?: string;
+      content?: string | Array<{ type?: string; text?: string }>;
     };
   }>;
 }
@@ -63,62 +63,57 @@ export async function testBedrockConnection(): Promise<{
 }
 
 /**
- * Extract JSON from response text that may contain reasoning tags
- * (The model sometimes wraps JSON in <reasoning> tags)
+ * Remove model reasoning blocks from visible output.
  *
- * @param responseText - The raw text response from the model
- * @returns Extracted JSON string
- * @throws Error if no JSON is found
+ * @param text - Raw model output text
+ * @returns Output text without <reasoning>...</reasoning> blocks
  */
-function extractClassificationJSON(responseText: string): string {
-  // Remove reasoning tags if present to avoid matching braces inside them
-  let cleanedText = responseText;
-  const reasoningEndTag = "</reasoning>";
-  const reasoningEndIndex = responseText.indexOf(reasoningEndTag);
-
-  if (reasoningEndIndex !== -1) {
-    // Skip past the closing reasoning tag
-    cleanedText = responseText.substring(
-      reasoningEndIndex + reasoningEndTag.length,
-    );
-  }
-
-  const jsonMatch = cleanedText.match(/\{[\s\S]*\}/);
-  if (!jsonMatch) {
-    throw new Error("No JSON found in response");
-  }
-  return jsonMatch[0];
+function stripReasoningBlocks(text: string): string {
+  return text.replace(/<reasoning>[\s\S]*?<\/reasoning>/gi, "").trim();
 }
 
 /**
- * Parse Bedrock response body to extract classification result
+ * Ensure parsed text is non-empty after cleanup.
+ */
+function requireNonEmptyOutput(text: string): string {
+  const cleaned = stripReasoningBlocks(text);
+
+  if (!cleaned) {
+    throw new Error("No user-visible text found in model response");
+  }
+
+  return cleaned;
+}
+
+/**
+ * Parse Bedrock response body and extract model output text
  *
  * @param responseBody - The parsed response body from Bedrock
- * @returns Classification object with violation, categories, confidence_scores, and rationale
+ * @returns Human-readable model output
  * @throws Error if response format is invalid
  */
-function parseBedrockResponse(responseBody: BedrockResponse): {
-  violation: 0 | 1;
-  categories: string[];
-  confidence_scores: Record<string, number>;
-  rationale: string;
-} {
-  // OpenAI format: { choices: [{ message: { content: "JSON string" } }] }
-  const responseText = responseBody.choices?.[0]?.message?.content;
+function parseBedrockResponse(responseBody: BedrockResponse): string {
+  const content = responseBody.choices?.[0]?.message?.content;
 
-  if (!responseText) {
+  if (!content) {
     throw new Error("Invalid response format from Bedrock");
   }
 
-  const jsonString = extractClassificationJSON(responseText);
-  const classification = JSON.parse(jsonString.trim());
+  if (typeof content === "string") {
+    return requireNonEmptyOutput(content);
+  }
 
-  return {
-    violation: classification.violation,
-    categories: classification.categories || [],
-    confidence_scores: classification.confidence_scores || {},
-    rationale: classification.rationale || "",
-  };
+  const text = content
+    .filter((item) => item.type === "text" && typeof item.text === "string")
+    .map((item) => item.text?.trim())
+    .filter(Boolean)
+    .join("\n\n");
+
+  if (!text) {
+    throw new Error("No text content found in response");
+  }
+
+  return requireNonEmptyOutput(text);
 }
 
 /**
@@ -127,19 +122,14 @@ function parseBedrockResponse(responseBody: BedrockResponse): {
  * @param content - The user-generated content to classify
  * @param modelId - The Bedrock model ID to use for classification
  * @param prompt - The system prompt to use for content classification
- * @returns Classification result with violation status, categories, scores, and rationale
+ * @returns Human-readable model assessment text
  * @throws Error if the API call fails or response is invalid
  */
 export async function classifyContent(
   content: string,
   modelId: string,
   prompt: string,
-): Promise<{
-  violation: 0 | 1;
-  categories: string[];
-  confidence_scores: Record<string, number>;
-  rationale: string;
-}> {
+): Promise<string> {
   const client = createBedrockClient();
   const messages = [
     {
@@ -171,7 +161,16 @@ export async function classifyContent(
 
   const response = await client.send(command);
   const decodedResponse = new TextDecoder().decode(response.body).trim();
-  const responseBody = JSON.parse(decodedResponse);
+
+  let responseBody: BedrockResponse;
+  try {
+    responseBody = JSON.parse(decodedResponse) as BedrockResponse;
+  } catch {
+    const preview = decodedResponse.slice(0, 300);
+    throw new Error(
+      `Invalid JSON response from Bedrock (length: ${decodedResponse.length}, preview: ${JSON.stringify(preview)})`,
+    );
+  }
 
   return parseBedrockResponse(responseBody);
 }

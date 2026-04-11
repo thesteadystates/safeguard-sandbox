@@ -44,16 +44,12 @@ export async function createEval(
   const { content, model } = validatedFields.data;
 
   try {
-    const classification = await classifyContent(
-      content,
-      model,
-      CONTENT_POLICY_PROMPT,
-    );
+    const modelOutput = await classifyContent(content, model, CONTENT_POLICY_PROMPT);
 
     return {
       content,
       model,
-      classification,
+      modelOutput,
     };
   } catch (error) {
     console.error("Error calling Bedrock API:", error);

@@ -80,9 +80,9 @@ export default function InfoModal() {
                   <p className="text-sm text-gray-600 dark:text-gray-300">
                     When you submit content, it is sent to AWS Bedrock where a
                     safety model analyzes it using the system prompt below. The
-                    model returns a JSON response indicating whether the content
-                    violates any safety policies, along with confidence scores
-                    and a rationale for the classification.
+                    model returns a human-readable assessment of whether the
+                    content violates any safety policies, with supporting
+                    reasoning.
                   </p>
                 </section>
 
