@@ -9,7 +9,7 @@ export default function Container({
 }: ContainerProps) {
   return (
     <div
-      className={`border border-r-8 border-b-8 border-gray-200 rounded-lg dark:border-white/5 dark:bg-neutral-900 ${className}`}
+      className={`rounded-xs border-2 border-zinc-950 bg-zinc-0 shadow-[-4px_4px_0_0_var(--zinc-950)] ${className}`}
     >
       {children}
     </div>

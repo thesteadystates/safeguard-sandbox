@@ -14,17 +14,17 @@ export default function Home() {
   const [state, formAction, pending] = useActionState(createEval, initialState);
 
   return (
-    <div className="h-[calc(100vh-8rem)] flex flex-col">
-      <div className="h-full sm:grow xs:flex-col sm:flex">
-        <div className="h-1/2 sm:h-full mx-auto sm:w-1/2 p-2">
+    <div className="flex w-full flex-1 min-h-0 flex-col">
+      <div className="flex h-full min-h-0 flex-1 flex-col gap-3 sm:flex-row">
+        <div className="mx-auto min-h-0 w-full flex-1">
           <ContentEvaluationForm
             formAction={formAction}
             pending={pending}
             state={state}
           />
         </div>
-        <div className="mx-auto sm:w-1/2 p-2">
-          <div className="h-full relative flex flex-col">
+        <div className="mx-auto min-h-0 w-full flex-1">
+          <div className="relative flex h-full min-h-0 flex-col">
             <ModelOutput output={state.modelOutput ?? null} loading={pending} />
           </div>
         </div>

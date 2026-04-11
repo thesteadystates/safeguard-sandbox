@@ -21,10 +21,10 @@ export default function ContentEvaluationForm({
   return (
     <form
       action={formAction}
-      className="h-full relative flex flex-col border-r-8 border-b-8 border-gray-200 rounded-lg dark:border-white/5 dark:bg-neutral-900"
+      className="relative flex h-full flex-col rounded-xs border-2 border-zinc-950 bg-zinc-0 shadow-[-4px_4px_0_0_var(--zinc-950)]"
     >
       <div className="order-1 inset-x-px absolute top-0">
-        <div className="flex items-center justify-between space-x-3 border-b border-gray-200 px-2 py-2 sm:px-3 dark:border-white/10">
+        <div className="flex items-center justify-between space-x-3 border-b-2 border-zinc-950 bg-zinc-0 px-2 py-2 sm:px-3">
           <ModelSwitcher
             key={state?.model || modelOptions[0].value}
             defaultValue={state?.model || modelOptions[0].value}
@@ -34,7 +34,7 @@ export default function ContentEvaluationForm({
             <button
               type="submit"
               disabled={pending}
-              className="rounded-md inline-flex items-center gap-2 bg-neutral-600 px-3 py-2 text-xs sm:text-sm font-semibold text-white shadow-xs hover:bg-neutral-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-600 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-neutral-500 dark:hover:bg-neutral-400 dark:focus-visible:outline-neutral-500"
+              className="inline-flex items-center gap-2 rounded-xs border-2 border-zinc-950 bg-zinc-300 px-3 py-2 text-xs font-mono uppercase tracking-normal text-zinc-950 transition hover:bg-zinc-400 disabled:cursor-not-allowed disabled:border-zinc-500 disabled:bg-zinc-0 disabled:text-zinc-500 sm:text-sm"
             >
               {pending && <ArrowPathIcon className="h-4 w-4 animate-spin" />}
               Submit
@@ -43,13 +43,13 @@ export default function ContentEvaluationForm({
         </div>
       </div>
 
-      <div className="order-2 grow bg-white outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-neutral-600 dark:bg-neutral-800/50 dark:outline-white/10 dark:focus-within:outline-neutral-500">
+      <div className="order-2 grow bg-zinc-0 outline-0 focus-within:outline focus-within:-outline-offset-1 focus-within:outline-zinc-700">
         {/* Spacer element to match the height of the toolbar */}
         <div aria-hidden="true">
           <div className="py-2">
             <div className="h-9" />
           </div>
-          <div className="h-px" />
+          <div className="h-0.5" />
         </div>
         <label htmlFor="content" className="sr-only">
           Content
@@ -59,7 +59,7 @@ export default function ContentEvaluationForm({
           name="content"
           rows={2}
           placeholder="Content to verify..."
-          className="block h-full w-full resize-none px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 dark:text-white dark:placeholder:text-gray-500"
+          className="block h-full w-full resize-none bg-transparent px-4 py-2 text-base text-zinc-950 placeholder:text-zinc-500 focus:outline-none sm:text-sm/6"
           defaultValue={state?.content || ""}
         />
       </div>

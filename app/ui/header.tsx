@@ -5,10 +5,10 @@ type HeaderProps = {
 
 export default function Header({ children, className = "" }: HeaderProps) {
   return (
-    <p
-      className={`inset-x-px space-x-3 border-b border-gray-200 p-2 sm:px-3 dark:border-white/10 ${className}`}
+    <div
+      className={`inset-x-px flex min-h-14.25 items-center border-b-2 border-zinc-950 bg-zinc-0 px-3 py-4 text-sm font-mono uppercase tracking-normal text-zinc-950 ${className}`}
     >
       {children}
-    </p>
+    </div>
   );
 }

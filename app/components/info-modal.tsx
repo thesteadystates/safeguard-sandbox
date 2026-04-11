@@ -18,7 +18,7 @@ export default function InfoModal() {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="rounded-full p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-600 focus-visible:ring-offset-2 dark:text-gray-400 dark:hover:bg-neutral-800 dark:hover:text-gray-200 dark:focus-visible:ring-neutral-400"
+        className="rounded-xs border-2 border-zinc-950 bg-zinc-0 p-2 text-zinc-950 hover:bg-zinc-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-700"
         aria-label="Learn more about this site"
       >
         <QuestionMarkCircleIcon className="h-6 w-6" aria-hidden="true" />
@@ -32,19 +32,19 @@ export default function InfoModal() {
       >
         <DialogBackdrop
           transition
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm transition duration-300 ease-out data-[closed]:opacity-0"
+          className="fixed inset-0 bg-zinc-950/40 transition duration-300 ease-out data-closed:opacity-0"
         />
 
         <div className="fixed inset-0 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4 text-center">
             <DialogPanel
               transition
-              className="w-full max-w-3xl transform overflow-hidden rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all duration-300 ease-out data-[closed]:scale-95 data-[closed]:opacity-0 dark:bg-neutral-900"
+              className="w-full max-w-3xl transform overflow-hidden rounded-xs border-2 border-zinc-950 bg-zinc-0 p-6 text-left align-middle shadow-[-6px_6px_0_0_var(--zinc-950)] transition-all duration-300 ease-out data-closed:scale-95 data-closed:opacity-0"
             >
               <div className="flex items-start justify-between">
                 <DialogTitle
                   as="h3"
-                  className="text-lg font-semibold text-gray-900 dark:text-white"
+                  className="text-lg font-semibold uppercase"
                   id="modal-title"
                 >
                   About Safeguard Sandbox
@@ -52,7 +52,7 @@ export default function InfoModal() {
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="rounded-md p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-600 focus-visible:ring-offset-2 dark:text-gray-500 dark:hover:bg-neutral-800 dark:hover:text-gray-400 dark:focus-visible:ring-neutral-400"
+                  className="rounded-xs border-2 border-zinc-950 p-1 text-zinc-950 hover:bg-zinc-250 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-700"
                   aria-label="Close dialog"
                 >
                   <XMarkIcon className="h-6 w-6" aria-hidden="true" />
@@ -61,10 +61,8 @@ export default function InfoModal() {
 
               <div className="mt-4 space-y-4">
                 <section>
-                  <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                    What is this?
-                  </h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                  <h4 className="mb-2 text-sm font-semibold uppercase">What is this?</h4>
+                  <p className="text-sm text-zinc-950/80">
                     Safeguard Sandbox is a playground for experimenting with AI
                     safety classification models. Enter any text content, and
                     the system will analyze it for potential safety violations
@@ -74,10 +72,8 @@ export default function InfoModal() {
                 </section>
 
                 <section>
-                  <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                    How does it work?
-                  </h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                  <h4 className="mb-2 text-sm font-semibold uppercase">How does it work?</h4>
+                  <p className="text-sm text-zinc-950/80">
                     When you submit content, it is sent to AWS Bedrock where a
                     safety model analyzes it using the system prompt below. The
                     model returns a human-readable assessment of whether the
@@ -87,20 +83,18 @@ export default function InfoModal() {
                 </section>
 
                 <section>
-                  <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                    System Prompt
-                  </h4>
+                  <h4 className="mb-2 text-sm font-semibold uppercase">System Prompt</h4>
                   <div className="relative">
-                    <pre className="overflow-x-auto rounded-md bg-gray-100 p-4 text-xs text-gray-800 dark:bg-neutral-800 dark:text-gray-200">
+                    <pre className="overflow-x-auto rounded-xs border-2 border-zinc-950 bg-white p-4 text-xs text-zinc-950">
                       <code>{CONTENT_POLICY_PROMPT}</code>
                     </pre>
                   </div>
                 </section>
 
                 <section>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                  <p className="text-xs text-zinc-950/70">
                     Press{" "}
-                    <kbd className="rounded bg-gray-200 px-1 py-0.5 text-gray-700 dark:bg-neutral-700 dark:text-gray-300">
+                    <kbd className="rounded-xs border border-zinc-950 bg-zinc-250 px-1 py-0.5 text-zinc-950">
                       Esc
                     </kbd>{" "}
                     to close this dialog, or click outside the modal.

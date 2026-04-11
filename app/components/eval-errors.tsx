@@ -11,16 +11,16 @@ export default function EvalErrors({
   const count = allErrors.length;
 
   return (
-    <div className="absolute bottom-0 w-full bg-red-500/15 p-4">
+    <div className="absolute bottom-0 w-full border-t-2 border-zinc-950 bg-zinc-150 p-4">
       <div className="flex">
         <div className="shrink-0">
           <XCircleIcon aria-hidden="true" className="size-5 text-red-400" />
         </div>
         <div className="ml-3">
-          <h3 className="text-sm font-medium text-red-800 dark:text-red-200">
+          <h3 className="text-sm font-medium text-zinc-950">
             {count === 1 ? "There was 1 error" : `There were ${count} errors`}
           </h3>
-          <div className="mt-2 text-sm text-red-700 dark:text-red-200/80">
+          <div className="mt-2 text-sm text-zinc-950/85">
             <ul role="list" className="list-disc space-y-1 pl-5">
               {allErrors.map((error, index) => (
                 <li key={index}>{error}</li>

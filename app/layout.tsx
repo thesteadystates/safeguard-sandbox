@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
 import InfoModal from "@/app/components/info-modal";
 
-const roboto = Roboto({
-  weight: "400",
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-roboto",
+  variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
@@ -24,24 +23,26 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${roboto.variable} tracking-wide h-full bg-white dark:bg-gray-950 scheme-light dark:scheme-dark`}
+      className={`${inter.variable} h-full`}
     >
-      <body className="h-full">
-        <div className="min-h-full">
-          <nav className="border-b-4 border-gray-200 bg-white dark:border-white/5 dark:bg-neutral-900">
+      <body className="h-full text-zinc-950 antialiased">
+        <div className="flex h-full flex-col overflow-hidden">
+          <nav className="sticky top-0 z-20 shrink-0 border-b-2 border-zinc-950 bg-zinc-100">
             <div className="mx-auto px-4">
-              <div className="flex h-16 justify-between items-center">
-                <div className="flex">
-                  <div className="flex shrink-0 items-center">
-                    <span>Safeguard Sandbox</span>
-                  </div>
+              <div className="flex h-16 items-center justify-between">
+                <div className="flex items-center">
+                  <span className="text-sm font-semibold uppercase tracking-wide">
+                    Safeguard Sandbox
+                  </span>
                 </div>
                 <InfoModal />
               </div>
             </div>
           </nav>
 
-          <main className="p-2">{children}</main>
+          <main className="flex w-full flex-1 min-h-0 overflow-hidden px-2 py-3 sm:px-3 sm:py-4">
+            {children}
+          </main>
         </div>
       </body>
     </html>
